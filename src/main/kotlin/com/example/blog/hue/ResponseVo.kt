@@ -1,3 +1,3 @@
 package com.example.blog.hue
 
-class ResponseVo (var resultCode: String)
+class ResponseVo (var version: String, var resultCode: String, var output: MutableMap<String, String>)
