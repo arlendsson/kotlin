@@ -14,11 +14,30 @@ group = "com.example"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
+//buildscript {
+//	extra.apply {
+//		set("querydslVersion", "4.2.2")
+//	}
+//}
+//val querydslVersion = ext.get("querydslVersion") as String
+
 repositories {
 	mavenCentral()
 	jcenter()
 	google()
 }
+
+//sourceSets {
+//	main {
+//		java {
+//			srcDirs += [file("$buildDir/generated/source/kapt/main")]
+//		}
+//	}
+//}
+
+//sourceSets["main"].withConvention(org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet::class) {
+//	kotlin.srcDir("$buildDir/generated/source/kapt/main")
+//}
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -41,6 +60,11 @@ dependencies {
 
 	implementation("com.googlecode.json-simple:json-simple:1.1")
 	implementation("com.google.code.gson:gson:2.8.6")
+	implementation("org.springframework.boot:spring-boot-starter-jdbc")
+	implementation("mysql:mysql-connector-java")
+	implementation("com.querydsl:querydsl-jpa:4.2.2")
+	kapt ("com.querydsl:querydsl-apt:4.2.2:jpa")
+	kapt ("org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.2.Final")
 }
 
 tasks.withType<KotlinCompile> {

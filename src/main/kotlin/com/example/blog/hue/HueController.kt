@@ -87,6 +87,13 @@ class HueController {
                 }
             }
 
+            var state: String = if (on) {   // backend parameter
+                "켰"
+            } else {
+                "껐"
+            }
+            output.put("state", state)
+
             return ResponseVo("2.0","OK", output)
         } catch (e: Exception) {
             println("##### answer.hue_lights_state error - output: " + output.toString())
@@ -116,5 +123,6 @@ class HueController {
         val rest: RestTemplate = RestTemplate()
         val responseEntity: ResponseEntity<String> = rest.exchange(uri, HttpMethod.PUT, entity, String::class.java)
         println("##### res: " + responseEntity.body)
+
     }
 }

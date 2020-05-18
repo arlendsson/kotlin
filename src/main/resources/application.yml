@@ -11,3 +11,19 @@ server:
 #blog.banner.title: aaa
 #blog.banner.content: ddd
 #server.port: 80
+
+spring:
+  datasource:
+    firstdb:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://127.0.0.1:3306/sakila?characterEncoding=UTF-8&serverTimezone=UTC
+      password: root
+      username: root
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
+#    properties:
+#      hibernate:
+#        id:
+#          new_generator_mappings: false
