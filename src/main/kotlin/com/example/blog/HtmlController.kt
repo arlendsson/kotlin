@@ -1,5 +1,6 @@
 package com.example.blog
 
+import mu.KotlinLogging
 import org.springframework.http.HttpStatus.*
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -12,26 +13,29 @@ import org.springframework.web.server.ResponseStatusException
 class HtmlController(private val repository: ArticleRepository//,
 					 /*private val properties: BlogProperties*/) {
 
+//	companion object KLogging()
+	val logger = KotlinLogging.logger {}
 
-
-//	@GetMapping("/")
-//	fun blog(model: Model): String {
+	@GetMapping("/")
+	fun blog(model: Model): String {
 //		model["title"] = properties.title
 //		model["banner"] = properties.banner
 //		model["articles"] = repository.findAllByOrderByAddedAtDesc().map { it.render() }
-//		return "blog"
-//	}
-
-	@GetMapping("/article/{slug}")
-	fun article(@PathVariable slug: String, model: Model): String {
-		val article = repository
-				.findBySlug(slug)
-				?.render()
-				?: throw ResponseStatusException(NOT_FOUND, "This article does not exist")
-		model["title"] = article.title
-		model["article"] = article
-		return "article"
+	logger.debug("##### hello debug")
+	logger.info("##### hello info")
+		return "main"
 	}
+
+//	@GetMapping("/article/{slug}")
+//	fun article(@PathVariable slug: String, model: Model): String {
+//		val article = repository
+//				.findBySlug(slug)
+//				?.render()
+//				?: throw ResponseStatusException(NOT_FOUND, "This article does not exist")
+//		model["title"] = article.title
+//		model["article"] = article
+//		return "article"
+//	}
 
 	fun Article.render() = RenderedArticle(
 			slug,

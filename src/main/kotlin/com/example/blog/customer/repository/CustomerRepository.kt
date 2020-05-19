@@ -13,7 +13,9 @@ class CustomerRepositorySupport(
         @Resource(name = "jpaQueryFactory")
         val query: JPAQueryFactory
 ): QuerydslRepositorySupport(Customer::class.java) {
+
     fun findByEmail(email: String): Customer? {
+
         return query.selectFrom(QCustomer.customer)
                 .where(QCustomer.customer.email.eq(email))
                 .fetchOne()
