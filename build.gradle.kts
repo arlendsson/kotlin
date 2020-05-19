@@ -8,6 +8,7 @@ plugins {
 	kotlin("plugin.allopen") version "1.3.61"
 	kotlin("plugin.jpa") version "1.3.61"
 	kotlin("kapt") version "1.3.61"
+	id("idea")
 }
 
 group = "com.example"
@@ -27,18 +28,6 @@ repositories {
 	google()
 }
 
-//sourceSets {
-//	main {
-//		java {
-//			srcDirs += [file("$buildDir/generated/source/kapt/main")]
-//		}
-//	}
-//}
-
-//sourceSets["main"].withConvention(org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet::class) {
-//	kotlin.srcDir("$buildDir/generated/source/kapt/main")
-//}
-
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-mustache")
@@ -54,7 +43,8 @@ dependencies {
 		exclude(module = "mockito-core")
 	}
 	testImplementation("org.junit.jupiter:junit-jupiter-api")
-	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+//	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+	testRuntime("org.junit.jupiter:junit-jupiter-engine")
 	testImplementation("com.ninja-squad:springmockk:1.1.3")
 
 
@@ -82,4 +72,7 @@ allOpen {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+sourceSets {
+	kotlin.sourceSets.register("$buildDir/generated/source/kapt/main")
 }

@@ -9,13 +9,27 @@ import javax.persistence.PersistenceContext
 
 @Configuration
 class QuerydslConfig (
+    @PersistenceContext
+    val entityManager: EntityManager
+) {
+    @Bean
+    fun jpaQueryFactory(): JPAQueryFactory {
+        return JPAQueryFactory(entityManager)
+    }
+}
+
+/*
+
+@Configuration
+class QuerydslConfig (
         @PersistenceContext(unitName = "foo")
         @Qualifier(value = "entityManagerFactory")
-        val fooEntityManager: EntityManager,
-
-        @PersistenceContext(unitName = "bar")
-        @Qualifier(value = "barEntityManagerFactory")
-        val barEntityManager: EntityManager
+        val fooEntityManager: EntityManager
+//        ,
+//
+//        @PersistenceContext(unitName = "bar")
+//        @Qualifier(value = "barEntityManagerFactory")
+//        val barEntityManager: EntityManager
 ) {
 
     @Bean
@@ -23,8 +37,9 @@ class QuerydslConfig (
         return JPAQueryFactory(fooEntityManager)
     }
 
-    @Bean
-    fun barJpaQueryFactory(): JPAQueryFactory {
-        return JPAQueryFactory(barEntityManager)
-    }
+//    @Bean
+//    fun barJpaQueryFactory(): JPAQueryFactory {
+//        return JPAQueryFactory(barEntityManager)
+//    }
 }
+*/

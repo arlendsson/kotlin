@@ -13,6 +13,7 @@ class HtmlController(private val repository: ArticleRepository//,
 					 /*private val properties: BlogProperties*/) {
 
 
+
 //	@GetMapping("/")
 //	fun blog(model: Model): String {
 //		model["title"] = properties.title
