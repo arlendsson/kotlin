@@ -35,4 +35,5 @@ spring:
 #  config: classpath:logback-spring.xml
     properties:
       hibernate:
-        show_sql: false   # Hibernate: select
+        show_sql: true   # Hibernate: select
+        format_sql: true
