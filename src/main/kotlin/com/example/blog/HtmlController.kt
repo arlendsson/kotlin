@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.server.ResponseStatusException
 
 @Controller
-class HtmlController(private val repository: ArticleRepository//,
-					 /*private val properties: BlogProperties*/) {
+class HtmlController(private val repository: ArticleRepository,
+					 private val properties: BlogProperties) {
 
 //	companion object KLogging()
 	val logger = KotlinLogging.logger {}
@@ -23,6 +23,10 @@ class HtmlController(private val repository: ArticleRepository//,
 //		model["articles"] = repository.findAllByOrderByAddedAtDesc().map { it.render() }
 	logger.debug("##### hello debug")
 	logger.info("##### hello info")
+
+		model["title"] = properties.title
+		model["banner"] = properties.banner
+
 		return "main"
 	}
 

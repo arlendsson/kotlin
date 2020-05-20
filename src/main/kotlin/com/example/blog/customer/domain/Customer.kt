@@ -27,12 +27,16 @@ data class Customer(
         var last_name: String = "",
         @Column(name = "email")
         var email: String = "",
-        @Column(name = "address_id")
-        var address_id: Int = 0,
+//        @Column(name = "address_id")
+//        var address_id: Int = 0,
         @Column(name = "active")
         var active: Int = 0,
         @Column(name = "create_date")
         var create_date: Date = Date(),
         @Column(name = "last_update")
-        var last_update: Date = Date()
+        var last_update: Date = Date(),
+
+        @OneToOne(cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
+        @JoinColumn(name = "address_id")
+        var address: Address
 )
