@@ -25,8 +25,8 @@ data class Address(
         var address2: String = "",
         @Column(name = "district")
         var district: String = "",
-        @Column(name = "city_id")
-        var city_id: Int = 0,
+//        @Column(name = "city_id")
+//        var city_id: Int = 0,
         @Column(name = "postal_code")
         var postal_code: String = "",
         @Column(name = "phone")
@@ -34,5 +34,8 @@ data class Address(
         @Column(name = "location")  // MySQL geometry type
         var location: String = "",
         @Column(name = "last_update")
-        var last_update: Date = Date()
+        var last_update: Date = Date(),
+        @OneToOne(cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
+        @JoinColumn(name = "city_id")
+        var city: City
 )

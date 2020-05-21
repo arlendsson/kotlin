@@ -1,8 +1,6 @@
 package com.example.blog.customer.repository
 
-import com.example.blog.customer.domain.Customer
-import com.example.blog.customer.domain.QAddress
-import com.example.blog.customer.domain.QCustomer
+import com.example.blog.customer.domain.*
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.data.jpa.repository.EntityGraph
 import org.springframework.data.jpa.repository.JpaRepository
@@ -18,13 +16,18 @@ class CustomerRepositoryImpl(
 ): QuerydslRepositorySupport(Customer::class.java), CustomerCustomizedRepository {
     val customer: QCustomer = QCustomer.customer
     val address: QAddress = QAddress.address1
+    val city: QCity = QCity.city1
+    val country: QCountry = QCountry.country1
 
     @EntityGraph(attributePaths = ["address"])
     override fun findList(offset: Long): List<Customer>? {
         return query
                 .from(customer)
-//                fetch join 안됨 // .leftJoin(address).on(customer.address.address_id.eq(address.address_id))
                 .leftJoin(customer.address, address)
+                .fetchJoin()
+                .leftJoin(address.city, city)
+                .fetchJoin()
+                .leftJoin(city.country, country)
                 .fetchJoin()
                 .orderBy(customer.customer_id.asc())
 //                .offset(offset).limit(10)
@@ -38,10 +41,14 @@ class CustomerRepositoryImpl(
                 .fetchOne()
     }
 
-    override fun findByEmailCustomerAddress(email: String): Customer? {
+    override fun findByEmailCustomerDetail(email: String): Customer? {
         return query
                 .from(customer)
                 .leftJoin(customer.address, address)
+                .fetchJoin()
+                .leftJoin(address.city, city)
+                .fetchJoin()
+                .leftJoin(city.country, country)
                 .fetchJoin()
                 .where(customer.email.eq(email))
                 .fetchOne() as Customer?
@@ -54,5 +61,5 @@ interface CustomerRepository: JpaRepository<Customer, String>, CustomerCustomize
 interface CustomerCustomizedRepository {
     fun findList(offset: Long): List<Customer>?
     fun findByEmail(email: String): Customer?
-    fun findByEmailCustomerAddress(email: String): Customer?
+    fun findByEmailCustomerDetail(email: String): Customer?
 }
