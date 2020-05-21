@@ -15,7 +15,7 @@ class CustomerController(val repository: CustomerRepository) {
 
     @GetMapping()
     fun getCustomers(): ResponseEntity<List<Customer>> {
-        val res = repository.findAll()
+        val res = repository.findList(10)
         return ResponseEntity(res, HttpStatus.OK)
     }
 
@@ -24,8 +24,8 @@ class CustomerController(val repository: CustomerRepository) {
 //        if (email.isEmpty()) {
 //            email = "PATRICIA.JOHNSON@sakilacustomer.org"
 //        }
-//        val res = repository.findByEmailCustomerAddress(email)
-        val res = repository.findByEmail(email)
+        val res = repository.findByEmailCustomerAddress(email)
+//        val res = repository.findByEmail(email)
 
         return ResponseEntity(res, HttpStatus.OK)
     }
