@@ -24,7 +24,7 @@ class CustomerController(val repository: CustomerRepository) {
 //        if (email.isEmpty()) {
 //            email = "PATRICIA.JOHNSON@sakilacustomer.org"
 //        }
-        val res = repository.findByEmailCustomerAddress(email)
+        val res = repository.findByEmailCustomerDetail(email)
 //        val res = repository.findByEmail(email)
 
         return ResponseEntity(res, HttpStatus.OK)
