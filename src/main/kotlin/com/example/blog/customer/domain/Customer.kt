@@ -38,5 +38,5 @@ data class Customer(
 
         @OneToOne(cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
         @JoinColumn(name = "address_id")
-        var address: Address
+        var address: Address?
 )

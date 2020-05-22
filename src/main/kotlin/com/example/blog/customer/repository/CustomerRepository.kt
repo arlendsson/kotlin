@@ -1,7 +1,11 @@
 package com.example.blog.customer.repository
 
 import com.example.blog.customer.domain.*
+import com.querydsl.core.QueryResults
 import com.querydsl.jpa.impl.JPAQueryFactory
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageImpl
+import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.EntityGraph
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
@@ -20,8 +24,8 @@ class CustomerRepositoryImpl(
     val country: QCountry = QCountry.country1
 
     @EntityGraph(attributePaths = ["address"])
-    override fun findList(offset: Long): List<Customer>? {
-        return query
+    override fun findList(pageable: Pageable, param: Customer): Page<Customer>? {
+        val result: QueryResults<Customer> = query
                 .from(customer)
                 .leftJoin(customer.address, address)
                 .fetchJoin()
@@ -30,8 +34,11 @@ class CustomerRepositoryImpl(
                 .leftJoin(city.country, country)
                 .fetchJoin()
                 .orderBy(customer.customer_id.asc())
-//                .offset(offset).limit(10)
-                .fetch() as List<Customer>?
+                .offset(pageable.offset)
+                .limit(pageable.pageSize.toLong())
+                .fetchResults() as QueryResults<Customer>
+
+        return PageImpl<Customer>(result.results, pageable, result.total)
     }
 
     override fun findByEmail(email: String): Customer? {
@@ -59,7 +66,7 @@ interface CustomerRepository: JpaRepository<Customer, String>, CustomerCustomize
 }
 
 interface CustomerCustomizedRepository {
-    fun findList(offset: Long): List<Customer>?
+    fun findList(pageable: Pageable, param: Customer): Page<Customer>?
     fun findByEmail(email: String): Customer?
     fun findByEmailCustomerDetail(email: String): Customer?
 }
