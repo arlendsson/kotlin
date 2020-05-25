@@ -2,6 +2,7 @@ package com.example.blog.customer.repository
 
 import com.example.blog.customer.domain.*
 import com.querydsl.core.QueryResults
+import com.querydsl.core.types.dsl.BooleanExpression
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
@@ -23,6 +24,33 @@ class CustomerRepositoryImpl(
     val city: QCity = QCity.city1
     val country: QCountry = QCountry.country1
 
+    private fun dynamicCondition(type: String, value: String): BooleanExpression? {
+        when (type) {
+            "first_name" -> {
+                if (value?.isNotEmpty()) {
+                    return customer.first_name.likeIgnoreCase(value)
+                } else {
+                    return null
+                }
+            }
+            "last_name" -> {
+                if (value?.isNotEmpty()) {
+                    return customer.last_name.likeIgnoreCase(value)
+                } else {
+                    return null
+                }
+            }
+            "email" -> {
+                if (value?.isNotEmpty()) {
+                    return customer.email.likeIgnoreCase(value)
+                } else {
+                    return null
+                }
+            }
+            else -> return null
+        }
+    }
+
     @EntityGraph(attributePaths = ["address"])
     override fun findList(pageable: Pageable, param: Customer): Page<Customer>? {
         val result: QueryResults<Customer> = query
@@ -33,6 +61,11 @@ class CustomerRepositoryImpl(
                 .fetchJoin()
                 .leftJoin(city.country, country)
                 .fetchJoin()
+                .where(
+                        dynamicCondition("first_name", param.first_name),
+                        dynamicCondition("last_name", param.last_name),
+                        dynamicCondition("email", param.email)
+                )
                 .orderBy(customer.customer_id.asc())
                 .offset(pageable.offset)
                 .limit(pageable.pageSize.toLong())
