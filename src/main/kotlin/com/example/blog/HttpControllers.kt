@@ -19,7 +19,7 @@ class ArticleController(private val repository: ArticleRepository) {
 
 @RestController
 @RequestMapping("/api/user")
-class UserController(private val repository: UserRepository) {
+class UserController(private val repository: UserrRepository) {
 
 	@GetMapping("/")
 	fun findAll() = repository.findAll()

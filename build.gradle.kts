@@ -51,10 +51,11 @@ dependencies {
 	implementation("io.github.microutils:kotlin-logging:1.7.9")
 	implementation("biz.paluch.logging:logstash-gelf:1.10.0")
 
-	/*
-	oauth2
-	 */
+	// oauth2
 	implementation("org.springframework.security:spring-security-oauth2-client")
+	// security
+	implementation("org.springframework.security:spring-security-config")
+
 
 }
 

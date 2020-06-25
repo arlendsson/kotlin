@@ -7,7 +7,7 @@ interface ArticleRepository : CrudRepository<Article, Long> {
 	fun findAllByOrderByAddedAtDesc(): Iterable<Article>
 }
 
-interface UserRepository : CrudRepository<User, Long> {
-	fun findByLogin(login: String): User?
+interface UserrRepository : CrudRepository<Userr, Long> {
+	fun findByLogin(login: String): Userr?
 }
 

@@ -13,6 +13,9 @@ server:
 #server.port: 80
 
 spring:
+  profiles:
+    include: oauth
+
   datasource:
     firstdb:
       driver-class-name: com.mysql.cj.jdbc.Driver

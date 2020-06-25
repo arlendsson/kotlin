@@ -22,7 +22,7 @@
             </pattern>
         </encoder>
     </appender>
-    <logger name="org.springframework" level="INFO">
+    <logger name="org.springframework" level="DEBUG">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="FILE" />
     </logger>

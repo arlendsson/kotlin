@@ -9,13 +9,13 @@ import org.springframework.data.repository.findByIdOrNull
 
 @DataJpaTest
 class RepositoriesTests @Autowired constructor(
-		val entityManager: TestEntityManager,
-		val userRepository: UserRepository,
-		val articleRepository: ArticleRepository) {
+        val entityManager: TestEntityManager,
+        val userrRepository: UserrRepository,
+        val articleRepository: ArticleRepository) {
 
 	@Test
 	fun `When findByIdOrNull then return Article`() {
-		val juergen = User("springjuergen", "Juergen", "Hoeller")
+		val juergen = Userr("springjuergen", "Juergen", "Hoeller")
 		entityManager.persist(juergen)
 		val article = Article("Spring Framework 5.0 goes GA", "Dear Spring community ...", "Lorem ipsum", juergen)
 		entityManager.persist(article)
@@ -26,10 +26,10 @@ class RepositoriesTests @Autowired constructor(
 
 	@Test
 	fun `When findByLogin then return User`() {
-		val juergen = User("springjuergen", "Juergen", "Hoeller")
+		val juergen = Userr("springjuergen", "Juergen", "Hoeller")
 		entityManager.persist(juergen)
 		entityManager.flush()
-		val user = userRepository.findByLogin(juergen.login)
+		val user = userrRepository.findByLogin(juergen.login)
 		assertThat(user).isEqualTo(juergen)
 	}
 }
